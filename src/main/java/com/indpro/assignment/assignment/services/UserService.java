@@ -1,6 +1,7 @@
 package com.indpro.assignment.assignment.services;
 
 import com.indpro.assignment.assignment.dtos.UserDTO;
+import com.indpro.assignment.assignment.entity.Role;
 import com.indpro.assignment.assignment.entity.User;
 import com.indpro.assignment.assignment.repository.UserRepository;
 import com.indpro.assignment.assignment.services.impl.UserDetailsServiceImpl;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -36,6 +40,11 @@ public class UserService {
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        List<Role> roles=new ArrayList<>();
+        Role r=new Role();
+        r.setName("ROLE_USER");
+        roles.add(r);
+        user.setRoles(roles);
         return userRepository.save(user);
     }
 
@@ -48,6 +57,9 @@ public class UserService {
         }
 
         return jwtUtil.generateToken(userDetails);
+    }
+    public User getUserByUsername(String userName){
+        return userRepository.findByUsername(userName);
     }
 }
 

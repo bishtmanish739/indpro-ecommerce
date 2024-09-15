@@ -28,8 +28,12 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login").permitAll()  // Public endpoints
-                        .anyRequest().authenticated()  // All other endpoints require authentication
+                        .requestMatchers("/auth/register", "/auth/login").permitAll()
+                        .requestMatchers("/auth/user").hasAnyAuthority("ROLE_ADMIN")
+
+                        .requestMatchers("/products").hasAnyAuthority("ROLE_ADMIN")// Public endpoints
+
+                        .anyRequest().permitAll()  // All other endpoints require authentication
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Use stateless sessions (JWT)

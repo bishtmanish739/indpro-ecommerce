@@ -1,11 +1,12 @@
 package com.indpro.assignment.assignment.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
+
 
 @Entity
 @Table(name = "users")
@@ -27,6 +28,16 @@ public class User {
     @Column(name = "created_at", nullable = false)
     private Instant createdAt=Instant.now();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Order> orders;
+    @OneToMany(mappedBy = "user",  orphanRemoval = true)
+    @JsonManagedReference
+    private List<Order> orders;
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    @JsonManagedReference
+    private List<Role> roles;
 }

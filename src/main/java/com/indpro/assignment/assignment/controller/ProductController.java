@@ -1,15 +1,19 @@
 package com.indpro.assignment.assignment.controller;
 
+import com.indpro.assignment.assignment.dtos.ProductDTO;
 import com.indpro.assignment.assignment.entity.Product;
 import com.indpro.assignment.assignment.services.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@Slf4j
 public class ProductController {
 
     @Autowired
@@ -20,14 +24,16 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        Product createdProduct = productService.createProduct(product);
+    public ResponseEntity<List<Product>> createProducts(@RequestBody List<ProductDTO> product) {
+        List<Product> createdProduct = productService.saveAllProducts(product);
         return ResponseEntity.ok(createdProduct);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) throws Exception {
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDetails) throws Exception {
+
         Product updatedProduct = productService.updateProduct(id, productDetails);
         return ResponseEntity.ok(updatedProduct);
     }

@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.Instant;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,9 +29,11 @@ public class Product {
     private Integer stock;
 
     @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+    private Instant createdAt=Instant.now();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<OrderItem> orderItems;
+    @OneToMany()
+    private Set<OrderItem> orderItems ;
+
+
 }
 
