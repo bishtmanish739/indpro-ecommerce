@@ -41,7 +41,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrder(@PathVariable Long id, Principal principal) {
+    public ResponseEntity<OrderDTO> getOrder(@PathVariable Long id, Principal principal) {
         User user = userService.getUserByUsername(principal.getName());
         return orderService.getOrder(id, user)
                 .map(ResponseEntity::ok)

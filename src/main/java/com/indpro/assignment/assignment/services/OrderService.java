@@ -80,9 +80,10 @@ public class OrderService {
         return orderMapper.toDtoList(orders);
     }
 
-    public Optional<Order> getOrder(Long orderId, User user) {
+    public Optional<OrderDTO> getOrder(Long orderId, User user) {
         return orderRepository.findById(orderId)
-                .filter(order -> order.getUser().equals(user));
+                .filter(order -> order.getUser().equals(user)).map(orderMapper::toDto);
+
     }
 }
 
