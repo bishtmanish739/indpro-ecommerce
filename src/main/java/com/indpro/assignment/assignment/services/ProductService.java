@@ -22,7 +22,7 @@ public class ProductService {
 
 
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findAllByIsDeletedFalse();
     }
 
 
@@ -49,9 +49,11 @@ public class ProductService {
     }
 
 
-    public void deleteProduct(Long id) throws BadRequestException {
+    public String deleteProduct(Long id) throws BadRequestException {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Product not found"));
-        productRepository.delete(product);
+        product.setDeleted(true);
+        productRepository.save(product);
+       return "Product Deleted";
     }
 }

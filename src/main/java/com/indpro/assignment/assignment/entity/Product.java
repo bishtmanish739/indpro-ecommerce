@@ -28,11 +28,17 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
+    @Column(nullable = true)
+    private String productUrl;
+
     @Column(name = "created_at", nullable = false)
     private Instant createdAt=Instant.now();
 
     @OneToMany()
     private Set<OrderItem> orderItems ;
+
+    @Column(name="is_deleted", nullable = true)
+    private boolean isDeleted = false;
 
 
 }

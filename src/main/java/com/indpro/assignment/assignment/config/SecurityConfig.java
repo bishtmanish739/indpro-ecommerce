@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/register", "/auth/login").permitAll()
                         .requestMatchers("/auth/user").hasAnyAuthority("ROLE_ADMIN")
 
-                        .requestMatchers("/products").hasAnyAuthority("ROLE_ADMIN")// Public endpoints
+                        .requestMatchers("/products").permitAll() //.hasAnyAuthority("ROLE_ADMIN")// Public endpoints
 
                         .anyRequest().permitAll()  // All other endpoints require authentication
                 )

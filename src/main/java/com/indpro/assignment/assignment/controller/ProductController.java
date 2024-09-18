@@ -39,8 +39,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) throws  Exception{
-        productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) throws  Exception{
+        String msg=productService.deleteProduct(id);
+        return ResponseEntity.ok(msg);
     }
 }
