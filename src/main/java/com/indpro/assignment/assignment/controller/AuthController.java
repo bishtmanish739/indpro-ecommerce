@@ -1,5 +1,6 @@
 package com.indpro.assignment.assignment.controller;
 
+import com.indpro.assignment.assignment.dtos.LoginResponse;
 import com.indpro.assignment.assignment.dtos.UserDTO;
 import com.indpro.assignment.assignment.entity.User;
 import com.indpro.assignment.assignment.repository.UserRepository;
@@ -32,8 +33,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserDTO userDTO) {
         try {
-            String token = userService.loginUser(userDTO);
-            return ResponseEntity.ok(token);
+            LoginResponse loginResponse = userService.loginUser(userDTO);
+            return ResponseEntity.ok(loginResponse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

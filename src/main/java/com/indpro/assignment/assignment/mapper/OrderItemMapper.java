@@ -22,6 +22,8 @@ public interface OrderItemMapper {
 
     // Mapping from Product entity to ProductDTO
     @Mapping(target = "productId",source = "product.id")
+    @Mapping(target = "productName",source = "product.name")
+    @Mapping(target = "productUrl",source = "product.productUrl")
     OrderItemDTO toDto(OrderItem orderItem);
 
     List<OrderItem> toEntityList(List<OrderItemDTO> dtoList);

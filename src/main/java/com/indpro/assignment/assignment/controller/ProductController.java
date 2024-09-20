@@ -26,12 +26,14 @@ public class ProductController {
 
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Product>> createProducts(@RequestBody List<ProductDTO> product) {
         List<Product> createdProduct = productService.saveAllProducts(product);
         return ResponseEntity.ok(createdProduct);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDetails) throws Exception {
 
         Product updatedProduct = productService.updateProduct(id, productDetails);
@@ -39,6 +41,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) throws  Exception{
         String msg=productService.deleteProduct(id);
         return ResponseEntity.ok(msg);

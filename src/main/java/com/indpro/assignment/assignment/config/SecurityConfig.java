@@ -2,6 +2,7 @@ package com.indpro.assignment.assignment.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,11 +30,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())  // Disable CSRF
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/register", "/auth/login").permitAll()
-                        .requestMatchers("/auth/user").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/products").permitAll()
+                        .anyRequest().authenticated()
 
-                        .requestMatchers("/products").permitAll() //.hasAnyAuthority("ROLE_ADMIN")// Public endpoints
 
-                        .anyRequest().permitAll()  // All other endpoints require authentication
+
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Use stateless sessions (JWT)
